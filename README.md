@@ -18,11 +18,15 @@ Steve Run was inspired by the Chrome browser game, Dino Run. A good implementati
 
 3. **Make sure you have Python installed**. The installation can be found here: [https://www.python.org/downloads/](https://www.python.org/downloads/). Note that this game was coded in Python 3.9.7.
 
-4. **Make sure you have Pygame installed**. This game relies heavily on Pygame modules. You should be able to run `$ pip install pygame`, but for more detailed instructions, follow the link: [https://www.pygame.org/wiki/GettingStarted](https://www.pygame.org/wiki/GettingStarted)
+4. **Make sure you have Pygame installed**. This game relies heavily on Pygame modules. You should be able to run `$ pip install pygame`, but for more detailed instructions, follow the link: [https://www.pygame.org/wiki/GettingStarted](https://www.pygame.org/wiki/GettingStarted).
 
 5. **Open the cloned repository** in an IDE that you prefer. VS Code is a good option, or if you want a browser version to forego downloads, try making a [https://replit.com/](Replit) account and running the project through there.
 
-6. If you want to, **run some unit tests**. Install pytest with `$ pip install pytest`, and 
+6. If you want to, **run some unit tests**. Install pytest with `$ pip install pytest`. In the command line, navigate into the repository folder using `$ cd <location of repository>`, run `$ python`, then run `>>> pytest`.
+
+### Dependencies
+
+As in the above instructions, this project has one dependency, Pygame. Again, the download instructions can be found here: [https://www.pygame.org/wiki/GettingStarted](https://www.pygame.org/wiki/GettingStarted).
 
 ### Usage
 
