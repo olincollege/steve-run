@@ -1,101 +1,91 @@
-# this is the model. it holds all the informtion and is changed (wel, an instance of it is changed) by the controllers. From there, the view can read in the model and change the view
-
 import pygame
-import os
+import random
+
+from background_controller import BackgroundController
+from steve_controller import SteveController
+from background_view import BackgroundView
+from steve_view import SteveView
+from obstacle_view import SmallMarkView, LargeMarkView, HelicopterView
+from steve_run import SteveRun
+# from menu_controller import menu
 
 
-class SteveRun:
-    pygame.init()
-    clock = pygame.time.Clock()
+def main():
+    run = True
 
-    SCREEN_HEIGHT = 500
-    SCREEN_WIDTH = 900
-    SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    ## stuff below here is what I am definig, p sure its right
+    steve_run = SteveRun()    # create an instance of the SteveRun class
+    _steve_controller = SteveController(steve_run)
+    _background_controller = BackgroundController(steve_run)
+    _steve_view = SteveView(steve_run, _steve_controller)
+    _background_view = BackgroundView(steve_run)
+    # _obstacles_view = ObstacleView()
 
-    FONT = pygame.font.Font('freesansbold.ttf', 20)
-    BG = pygame.image.load(os.path.join("Assets/Other", "Background.png"))
-    BG = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
 
-    steve_run_1 = pygame.image.load(os.path.join("Assets/Steve", "SteveRun1.png"))
-    steve_run_2 = pygame.image.load(os.path.join("Assets/Steve", "SteveRun2.png"))
-    RUNNING_IMAGE = [pygame.transform.scale(steve_run_1, (75, 100)),
-                     pygame.transform.scale(steve_run_2, (75, 100))]
-    steve_jump = pygame.image.load(os.path.join("Assets/Steve", "SteveJump.png"))
-    JUMPING_IMAGE = pygame.transform.scale(steve_jump, (75, 100))
-    steve_duck_1 = pygame.image.load(os.path.join("Assets/Steve", "SteveDuck1.png"))
-    steve_duck_2 = pygame.image.load(os.path.join("Assets/Steve", "SteveDuck2.png"))
-    DUCKING_IMAGE = [pygame.transform.scale(steve_duck_1, (75, 100)),
-                     pygame.transform.scale(steve_duck_2, (75, 100))]
+        SteveRun.SCREEN.fill((255, 255, 255))
+        user_input = pygame.key.get_pressed()
 
-    small_mark_1 = pygame.image.load(os.path.join("Assets/Zuckerberg", "SmallZuckerberg1.png"))
-    small_mark_2 = pygame.image.load(os.path.join("Assets/Zuckerberg", "SmallZuckerberg2.png"))
-    small_mark_3 = pygame.image.load(os.path.join("Assets/Zuckerberg", "SmallZuckerberg3.png"))
-    large_mark_1 = pygame.image.load(os.path.join("Assets/Zuckerberg", "LargeZuckerberg1.png"))
-    large_mark_2 = pygame.image.load(os.path.join("Assets/Zuckerberg", "LargeZuckerberg2.png"))
-    large_mark_3 = pygame.image.load(os.path.join("Assets/Zuckerberg", "LargeZuckerberg3.png"))
-    SMALL_OBSTACLE_IMAGE = [pygame.transform.scale(small_mark_1, (125, 100)),
-                            pygame.transform.scale(small_mark_2, (125, 100)),
-                            pygame.transform.scale(small_mark_3, (125, 100))]
-    LARGE_OBSTACLE_IMAGE = [pygame.transform.scale(large_mark_1, (150, 100)),
-                            pygame.transform.scale(large_mark_2, (150, 100)),
-                            pygame.transform.scale(large_mark_3, (150, 100))]
-    helicopter_1 = pygame.image.load(os.path.join("Assets/Helicopter", "Helicopter1.png"))
-    helicopter_2 = pygame.image.load(os.path.join("Assets/Helicopter", "Helicopter2.png"))
-    FLYING_OBSTACLE_IMAGE = [pygame.transform.scale(helicopter_1, (225, 100)),
-                             pygame.transform.scale(helicopter_2, (225, 100))]
+        steve_run.background()
+        _background_view.draw(SteveRun.SCREEN)
+        _background_controller.update()
 
-    CLOUD = pygame.image.load(os.path.join("Assets/Other", "Cloud.png"))
-  
-    def __init__(self):
-        self._points = 0
-        self._game_speed = 20
-        self._death_count = 0
-        self._image = self.RUNNING_IMAGE[0]
-        self.x_pos_bg = 0
-        self.y_pos_bg = 0
-        self._obstacles = []
+        _steve_view.draw(SteveRun.SCREEN)
+        _steve_view._steve_controller.update(user_input)
 
-    def score(self):
-        self._points += 1
-        if self._points % 100 == 0:
-            self._game_speed += 1
-        text = self.FONT.render("Points: " + str(self._points), True, (0, 0, 0))
+        if len(steve_run.obstacles()) == 0:
+            if random.randint(0, 2) == 0:
+                steve_run.add_to_obstacles(SmallMarkView(steve_run,
+                                                       SteveRun.SMALL_OBSTACLE_IMAGE))
+            elif random.randint(0, 2) == 1:
+                steve_run.add_to_obstacles(LargeMarkView(steve_run,
+                                                       SteveRun.LARGE_OBSTACLE_IMAGE))
+            elif random.randint(0, 2) == 2:
+                steve_run.add_to_obstacles(HelicopterView(steve_run,
+                                                       SteveRun.FLYING_OBSTACLE_IMAGE))
+                print("Flying Obstacle Image")
+
+        for obstacle in steve_run.obstacles():
+            obstacle.draw(SteveRun.SCREEN)
+            obstacle.update()
+            if _steve_controller.steve_rect.colliderect(obstacle.rect):
+                pygame.time.delay(2000)
+                steve_run.increase_death_count()
+                menu(steve_run.death_count(), steve_run)
+
+        steve_run.score()
+
+        steve_run.clock.tick(30)
+        pygame.display.update()
+
+
+def menu(death_count, steve_run):
+    run = True
+    while run:
+        SteveRun.SCREEN.fill((255, 255, 255))
+        FONT = pygame.font.Font('freesansbold.ttf', 30)
+
+        if death_count == 0:
+            text = FONT.render("Press any Key to Start", True, (0, 0, 0))
+        elif death_count > 0:
+            text = FONT.render("Press any Key to Restart", True, (0, 0, 0))
+            score = FONT.render("Your Score: " + str(steve_run.points), True, (0, 0, 0))
+            scoreRect = score.get_rect()
+            scoreRect.center = (SteveRun.SCREEN_WIDTH // 2, SteveRun.SCREEN_HEIGHT // 2 + 50)
+            SteveRun.SCREEN.blit(score, scoreRect)
         textRect = text.get_rect()
-        textRect.center = (1000, 40)
-        self.SCREEN.blit(text, textRect)
+        textRect.center = (SteveRun.SCREEN_WIDTH // 2, SteveRun.SCREEN_HEIGHT // 2)
+        SteveRun.SCREEN.blit(text, textRect)
+        SteveRun.SCREEN.blit(SteveRun.RUNNING_IMAGE[0], (SteveRun.SCREEN_WIDTH // 2 - 20, SteveRun.SCREEN_HEIGHT // 2 - 140))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.KEYDOWN:
+                main()
 
-    def background(self):
-        image_width = self.BG.get_width()
-        self.SCREEN.blit(self.BG, (self.x_pos_bg, self.y_pos_bg))
-        self.SCREEN.blit(self.BG, (image_width + self.x_pos_bg, self.y_pos_bg))
-        if self.x_pos_bg <= -image_width:
-            self.SCREEN.blit(self.BG, (image_width + self.x_pos_bg, self.y_pos_bg))
-            self.x_pos_bg = 0
-        self.x_pos_bg -= self.game_speed()
-
-    def points(self):
-        return self._points
-
-    def game_speed(self):
-        return self._game_speed
-
-    def death_count(self):
-        return self._death_count
-
-    def increase_death_count(self):
-        self._death_count += 1
-
-    def reset_death_count(self):
-        self._death_count = 0
-
-    def image(self):
-        return self._image
-
-    def update_image(self, new_image):
-        self._image = new_image
-
-    def obstacles(self):
-        return self._obstacles
-
-    def add_to_obstacles(self, new_obstacle):
-        self._obstacles.append(new_obstacle)
+steve_run_2 = SteveRun()
+menu(death_count=0, steve_run=steve_run_2)
