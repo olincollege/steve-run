@@ -102,12 +102,12 @@ class SteveRun:
         '''
         Edits and displays the score during a game.
         '''
-        self._points += 1
-        if self._points % 100 == 0:
+        self.increase_points()
+        if self.points() % 100 == 0:
             self._game_speed += 1
-        text = self.FONT.render("Points: " + str(self._points), True, (0, 0, 0))
+        text = self.FONT.render("Points: " + str(self.points()), True, (0, 0, 0))
         textRect = text.get_rect()
-        textRect.center = (1000, 40)
+        textRect.center = (self.SCREEN_WIDTH - 100, 30)
         self.SCREEN.blit(text, textRect)
 
     def background(self):
@@ -127,6 +127,12 @@ class SteveRun:
         Returns the `points` attribute.
         '''
         return self._points
+
+    def increase_points(self):
+        '''
+        Increases the total points by 1.
+        '''
+        self._points += 1
 
     def game_speed(self):
         '''
