@@ -1,8 +1,11 @@
+'''
+Tester functions for Steve Run, using pytest.
+'''
+
 import pytest
 import pygame
 from steve_controller import SteveController
 from steve_run import SteveRun
-from main import run_game, menu
 
 pygame.init()
 
@@ -28,7 +31,7 @@ def test_game_speed_start():
     steve_run = SteveRun()
     assert steve_run.game_speed() == 20
 
-def test_game_speed_increase():
+def test_game_speed_increase_1():
     '''
     Test if the game speed increases every 100 points
     '''
@@ -37,6 +40,18 @@ def test_game_speed_increase():
     steve_run.score()
     print(steve_run.points())
     assert steve_run.game_speed() == 21
+
+def test_game_speed_increase_2():
+    '''
+    Test if the game speed increases twice when at 200 points
+    '''
+    steve_run = SteveRun()
+    steve_run.increase_points(99)
+    steve_run.score()
+    steve_run.increase_points(99)
+    steve_run.score()
+    print(steve_run.points())
+    assert steve_run.game_speed() == 22
 
 
 steve_images = [
@@ -68,39 +83,14 @@ def test_steve_image_change(state, image, expected_comparison):
 
     if image == "crouch_image":
         compare_image = steve_run.CROUCHING_IMAGE
-        comparison = (steve_run.image() == compare_image[0]) or (steve_run.image() == compare_image[1])
+        comparison = (steve_run.image() == compare_image[0]) or \
+            (steve_run.image() == compare_image[1])
     if image == "run_image":
         image_to_compare = steve_run.RUNNING_IMAGE
-        comparison = (steve_run.image() == image_to_compare[0]) or (steve_run.image() == image_to_compare[1])
+        comparison = (steve_run.image() == image_to_compare[0]) or \
+            (steve_run.image() == image_to_compare[1])
     if image == "jump_image":
         image_to_compare = steve_run.JUMPING_IMAGE
         comparison = steve_run.image() == image_to_compare
 
     assert expected_comparison == comparison
-
-def test_steve_running_change():
-    '''
-    Test that the character image changes when the attributes change.
-    '''
-    steve_run = SteveRun()
-    steve_controller = SteveController(steve_run)
-    steve_controller.run()
-    assert steve_run.image() in steve_run.RUNNING_IMAGE
-
-def test_steve_running_change_incorrect():
-    '''
-    Test that the character image changes when the attributes change.
-    '''
-    steve_run = SteveRun()
-    steve_controller = SteveController(steve_run)
-    steve_controller.run()
-    assert steve_run.image() not in steve_run.CROUCHING_IMAGE
-
-def test_steve_jump_change():
-    '''
-    Test that the character image changes when the attributes change.
-    '''
-    steve_run = SteveRun()
-    steve_controller = SteveController(steve_run)
-    steve_controller.jump()
-    assert steve_run.image() == steve_run.JUMPING_IMAGE
