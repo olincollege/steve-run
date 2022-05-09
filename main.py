@@ -1,25 +1,25 @@
+'''
+Main program to set up and run games of Steve Run.
+'''
+
 import pygame
 import random
 
-from background_controller import BackgroundController
 from steve_controller import SteveController
-from background_view import BackgroundView
 from steve_view import SteveView
 from obstacle_view import SmallMarkView, LargeMarkView, HelicopterView
 from steve_run import SteveRun
-# from menu_controller import menu
 
 
 def main():
+    '''
+    Play a game of Steve Run.
+    '''
     run = True
 
-    ## stuff below here is what I am definig, p sure its right
-    steve_run = SteveRun()    # create an instance of the SteveRun class
+    steve_run = SteveRun()
     _steve_controller = SteveController(steve_run)
-    _background_controller = BackgroundController(steve_run)
     _steve_view = SteveView(steve_run, _steve_controller)
-    _background_view = BackgroundView(steve_run)
-    # _obstacles_view = ObstacleView()
 
     while run:
         for event in pygame.event.get():
@@ -30,8 +30,6 @@ def main():
         user_input = pygame.key.get_pressed()
 
         steve_run.background()
-        _background_view.draw(SteveRun.SCREEN)
-        _background_controller.update()
 
         _steve_view.draw(SteveRun.SCREEN)
         _steve_view._steve_controller.update(user_input)
@@ -53,8 +51,8 @@ def main():
             obstacle.update()
             if _steve_controller.steve_rect.colliderect(obstacle.rect):
                 pygame.time.delay(2000)
-                steve_run.increase_death_count()
-                menu(steve_run.death_count(), steve_run)
+                steve_run.increase_caught_count()
+                menu(steve_run.caught_count(), steve_run)
 
         steve_run.score()
 
@@ -62,15 +60,20 @@ def main():
         pygame.display.update()
 
 
-def menu(death_count, steve_run):
+def menu(caught_count, steve_run):
+    '''
+    The menu that appears before/after each game.
+
+    This menu shows your previous run score.
+    '''
     run = True
     while run:
         SteveRun.SCREEN.fill((255, 255, 255))
         FONT = pygame.font.Font('freesansbold.ttf', 30)
 
-        if death_count == 0:
+        if caught_count == 0:
             text = FONT.render("Press any Key to Start", True, (0, 0, 0))
-        elif death_count > 0:
+        elif caught_count > 0:
             text = FONT.render("Press any Key to Restart", True, (0, 0, 0))
             score = FONT.render("Your Score: " + str(steve_run.points), True, (0, 0, 0))
             scoreRect = score.get_rect()
@@ -88,4 +91,4 @@ def menu(death_count, steve_run):
                 main()
 
 steve_run_2 = SteveRun()
-menu(death_count=0, steve_run=steve_run_2)
+menu(caught_count=0, steve_run=steve_run_2)
