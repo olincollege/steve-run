@@ -13,6 +13,15 @@ class SteveController:
     Class representing a controller for the player/character in the game.
 
     Attributes:
+        X_POSITION: an integer representing the horizontal position of Steve's
+            character image. It is the left side of the image.
+        Y_POSITION = an integer representing the vertical position of Steve's
+            character image. It is the top of the image.
+        Y_POSITION_DUCKING: an integer representing the vertical position of
+            Steve's character image when he is ducking.
+        JUMP_VELOCITY: a float representing the maximum velocity achieved by
+            Steve when he jumps. This is achieved at the beginning and end of
+            the jump.
         steve_run: an instance of the SteveRun class, representing the current
             instance of the game.
         duck_image: an array of 2 images representing Steve when ducking to
