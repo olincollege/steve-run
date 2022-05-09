@@ -49,7 +49,8 @@ def main():
             obstacle.draw(SteveRun.SCREEN)
             obstacle.update()
             if _steve_controller.steve_rect.colliderect(obstacle.rect):
-                pygame.time.delay(2000)
+                steve_run.update_image(steve_run.CAUGHT_STEVE)
+                pygame.time.delay(1000)
                 steve_run.increase_caught_count()
                 menu(steve_run.caught_count(), steve_run)
 
@@ -68,7 +69,7 @@ def menu(caught_count, steve_run):
     run = True
     while run:
         SteveRun.SCREEN.fill((255, 255, 255))
-        FONT = pygame.font.Font('freesansbold.ttf', 30)
+        FONT = pygame.font.Font("Assets/COMIC.TTF", 30)
 
         # text = FONT.render("Use Space/Shift or Up/Down to Navigate\n", True, (0, 0, 0))
         if caught_count == 0:
@@ -89,6 +90,35 @@ def menu(caught_count, steve_run):
                 run = False
             if event.type == pygame.KEYDOWN:
                 main()
+
+
+        # SteveRun.SCREEN.fill((255, 255, 255))
+        # FONT = pygame.font.SysFont("comicsansms", 30)
+
+        # text = "Use Space/Shift or Up/Down to Navigate\n"
+        # if caught_count == 0:
+        #     text = text + "Press any Key to Start"
+        # elif caught_count > 0:
+        #     caught_message = "You were caught!\nNow you have to work at " \
+        #         "Facebook :(\n"
+        #     text = caught_message + text + "Press any Key to Restart"
+        #     score = FONT.render("Your Score: " + str(steve_run.points()), True, (0, 0, 0))
+        #     scoreRect = score.get_rect()
+        #     scoreRect.center = (SteveRun.SCREEN_WIDTH // 2, SteveRun.SCREEN_HEIGHT // 2 + 50)
+        #     SteveRun.SCREEN.blit(score, scoreRect)
+
+        # text = FONT.render(text, True, (0, 0, 0))
+
+        # textRect = text.get_rect()
+        # textRect.center = (SteveRun.SCREEN_WIDTH // 2, SteveRun.SCREEN_HEIGHT // 2)
+        # SteveRun.SCREEN.blit(text, textRect)
+        # SteveRun.SCREEN.blit(SteveRun.RUNNING_IMAGE[0], (SteveRun.SCREEN_WIDTH // 2 - 20, SteveRun.SCREEN_HEIGHT // 2 - 140))
+        # pygame.display.update()
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         run = False
+        #     if event.type == pygame.KEYDOWN:
+        #         main()
 
 steve_run_2 = SteveRun()
 menu(caught_count=0, steve_run=steve_run_2)

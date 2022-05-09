@@ -54,15 +54,18 @@ class SteveRun:
     SCREEN_WIDTH = 900
     SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    FONT = pygame.font.Font('freesansbold.ttf', 20)
+    FONT = pygame.font.Font("Assets/COMIC.TTF", 20)
+
     BG = pygame.image.load(os.path.join("Assets/Other", "Background.png"))
     BG = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    # loading the images
     steve_run_1 = pygame.image.load(os.path.join("Assets/Steve", "SteveRun1.png"))
     steve_run_2 = pygame.image.load(os.path.join("Assets/Steve", "SteveRun2.png"))
     steve_jump = pygame.image.load(os.path.join("Assets/Steve", "SteveJump.png"))
     steve_crouch_1 = pygame.image.load(os.path.join("Assets/Steve", "SteveDuck1.png"))
     steve_crouch_2 = pygame.image.load(os.path.join("Assets/Steve", "SteveDuck2.png"))
+    steve_caught = pygame.image.load(os.path.join("Assets/Steve", "SteveCaught.png"))
     small_mark_1 = pygame.image.load(os.path.join("Assets/Zuckerberg", "SmallZuckerberg1.png"))
     small_mark_2 = pygame.image.load(os.path.join("Assets/Zuckerberg", "SmallZuckerberg2.png"))
     small_mark_3 = pygame.image.load(os.path.join("Assets/Zuckerberg", "SmallZuckerberg3.png"))
@@ -72,11 +75,13 @@ class SteveRun:
     helicopter_1 = pygame.image.load(os.path.join("Assets/Helicopter", "Helicopter1.png"))
     helicopter_2 = pygame.image.load(os.path.join("Assets/Helicopter", "Helicopter2.png"))
 
+    # scaling all loaded images
     RUNNING_IMAGE = [pygame.transform.scale(steve_run_1, (75, 100)),
                      pygame.transform.scale(steve_run_2, (75, 100))]
     JUMPING_IMAGE = pygame.transform.scale(steve_jump, (75, 100))
     CROUCHING_IMAGE = [pygame.transform.scale(steve_crouch_1, (75, 100)),
                      pygame.transform.scale(steve_crouch_2, (75, 100))]
+    CAUGHT_IMAGE = pygame.transform.scale(steve_caught, (100, 75))
     SMALL_OBSTACLE_IMAGE = [pygame.transform.scale(small_mark_1, (75, 75)),
                             pygame.transform.scale(small_mark_2, (75, 75)),
                             pygame.transform.scale(small_mark_3, (75, 75))]
