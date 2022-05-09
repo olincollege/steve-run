@@ -1,9 +1,8 @@
 '''
 The model holding all information within a Steve Run game.
 '''
-
-import pygame
 import os
+import pygame
 
 
 class SteveRun:
@@ -60,20 +59,34 @@ class SteveRun:
     BG = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # loading the images
-    steve_run_1 = pygame.image.load(os.path.join("Assets/Steve", "SteveRun1.png"))
-    steve_run_2 = pygame.image.load(os.path.join("Assets/Steve", "SteveRun2.png"))
-    steve_jump = pygame.image.load(os.path.join("Assets/Steve", "SteveJump.png"))
-    steve_crouch_1 = pygame.image.load(os.path.join("Assets/Steve", "SteveDuck1.png"))
-    steve_crouch_2 = pygame.image.load(os.path.join("Assets/Steve", "SteveDuck2.png"))
-    steve_caught = pygame.image.load(os.path.join("Assets/Steve", "SteveCaught.png"))
-    small_mark_1 = pygame.image.load(os.path.join("Assets/Zuckerberg", "SmallZuckerberg1.png"))
-    small_mark_2 = pygame.image.load(os.path.join("Assets/Zuckerberg", "SmallZuckerberg2.png"))
-    small_mark_3 = pygame.image.load(os.path.join("Assets/Zuckerberg", "SmallZuckerberg3.png"))
-    large_mark_1 = pygame.image.load(os.path.join("Assets/Zuckerberg", "LargeZuckerberg1.png"))
-    large_mark_2 = pygame.image.load(os.path.join("Assets/Zuckerberg", "LargeZuckerberg2.png"))
-    large_mark_3 = pygame.image.load(os.path.join("Assets/Zuckerberg", "LargeZuckerberg3.png"))
-    helicopter_1 = pygame.image.load(os.path.join("Assets/Helicopter", "Helicopter1.png"))
-    helicopter_2 = pygame.image.load(os.path.join("Assets/Helicopter", "Helicopter2.png"))
+    steve_run_1 = pygame.image.load(os.path.join("Assets/Steve",
+                                                 "SteveRun1.png"))
+    steve_run_2 = pygame.image.load(os.path.join("Assets/Steve",
+                                                 "SteveRun2.png"))
+    steve_jump = pygame.image.load(os.path.join("Assets/Steve",
+                                                "SteveJump.png"))
+    steve_crouch_1 = pygame.image.load(os.path.join("Assets/Steve",
+                                                    "SteveDuck1.png"))
+    steve_crouch_2 = pygame.image.load(os.path.join("Assets/Steve",
+                                                    "SteveDuck2.png"))
+    steve_caught = pygame.image.load(os.path.join("Assets/Steve",
+                                                  "SteveCaught.png"))
+    small_mark_1 = pygame.image.load(os.path.join("Assets/Zuckerberg",
+                                                  "SmallZuckerberg1.png"))
+    small_mark_2 = pygame.image.load(os.path.join("Assets/Zuckerberg",
+                                                  "SmallZuckerberg2.png"))
+    small_mark_3 = pygame.image.load(os.path.join("Assets/Zuckerberg",
+                                                  "SmallZuckerberg3.png"))
+    large_mark_1 = pygame.image.load(os.path.join("Assets/Zuckerberg",
+                                                  "LargeZuckerberg1.png"))
+    large_mark_2 = pygame.image.load(os.path.join("Assets/Zuckerberg",
+                                                  "LargeZuckerberg2.png"))
+    large_mark_3 = pygame.image.load(os.path.join("Assets/Zuckerberg",
+                                                  "LargeZuckerberg3.png"))
+    helicopter_1 = pygame.image.load(os.path.join("Assets/Helicopter",
+                                                  "Helicopter1.png"))
+    helicopter_2 = pygame.image.load(os.path.join("Assets/Helicopter",
+                                                  "Helicopter2.png"))
 
     # scaling all loaded images
     RUNNING_IMAGE = [pygame.transform.scale(steve_run_1, (75, 100)),
@@ -110,10 +123,11 @@ class SteveRun:
         self.increase_points()
         if self.points() % 100 == 0:
             self._game_speed += 1
-        text = self.FONT.render("Points: " + str(self.points()), True, (0, 0, 0))
-        textRect = text.get_rect()
-        textRect.center = (self.SCREEN_WIDTH - 100, 30)
-        self.SCREEN.blit(text, textRect)
+        text = self.FONT.render("Points: " + str(self.points()), True,
+                                (0, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (self.SCREEN_WIDTH - 100, 30)
+        self.SCREEN.blit(text, text_rect)
 
     def background(self):
         '''
@@ -123,7 +137,8 @@ class SteveRun:
         self.SCREEN.blit(self.BG, (self.x_pos_bg, self.y_pos_bg))
         self.SCREEN.blit(self.BG, (image_width + self.x_pos_bg, self.y_pos_bg))
         if self.x_pos_bg <= -image_width:
-            self.SCREEN.blit(self.BG, (image_width + self.x_pos_bg, self.y_pos_bg))
+            self.SCREEN.blit(self.BG, (image_width + self.x_pos_bg,
+                             self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed()
 
