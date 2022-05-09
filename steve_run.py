@@ -77,9 +77,9 @@ class SteveRun:
     JUMPING_IMAGE = pygame.transform.scale(steve_jump, (75, 100))
     CROUCHING_IMAGE = [pygame.transform.scale(steve_crouch_1, (75, 100)),
                      pygame.transform.scale(steve_crouch_2, (75, 100))]
-    SMALL_OBSTACLE_IMAGE = [pygame.transform.scale(small_mark_1, (125, 100)),
-                            pygame.transform.scale(small_mark_2, (125, 100)),
-                            pygame.transform.scale(small_mark_3, (125, 100))]
+    SMALL_OBSTACLE_IMAGE = [pygame.transform.scale(small_mark_1, (75, 75)),
+                            pygame.transform.scale(small_mark_2, (75, 75)),
+                            pygame.transform.scale(small_mark_3, (75, 75))]
     LARGE_OBSTACLE_IMAGE = [pygame.transform.scale(large_mark_1, (150, 100)),
                             pygame.transform.scale(large_mark_2, (150, 100)),
                             pygame.transform.scale(large_mark_3, (150, 100))]
