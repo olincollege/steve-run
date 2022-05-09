@@ -17,28 +17,28 @@ class SteveController:
             character image. It is the left side of the image.
         Y_POSITION = an integer representing the vertical position of Steve's
             character image. It is the top of the image.
-        Y_POSITION_DUCKING: an integer representing the vertical position of
-            Steve's character image when he is ducking.
+        Y_POSITION_CROUCHING: an integer representing the vertical position of
+            Steve's character image when he is crouching.
         JUMP_VELOCITY: a float representing the maximum velocity achieved by
             Steve when he jumps. This is achieved at the beginning and end of
             the jump.
         steve_run: an instance of the SteveRun class, representing the current
             instance of the game.
-        duck_image: an array of 2 images representing Steve when ducking to
+        crouch_image: an array of 2 images representing Steve when crouching to
             avoid flying obstacles. Alternating between these images simulates
             a running animation.
         run_image: an array of 2 images representing Steve when running
             normally.  Alternating between these images simulates a running
             animation.
         jump_image: an image representing Steve when jumping.
-        steve_ducking: a boolean representing whether Steve is currently
-            ducking or not.
+        steve_crouching: a boolean representing whether Steve is currently
+            crouching or not.
         steve_running = a boolean representing whether Steve is currently
             running or not.
         steve_jumping = a boolean representing whether Steve is currently
             jumping or not.
         step_index: an integer representing the duration each frame of a
-            running/ducking animation lasts.
+            running/crouching animation lasts.
         jump_velocity: a float representing the speed at which Steve is rising
             or falling over the duration of a jump.
         steve_rect: an array of 2 integers representing the size of Steve's
@@ -48,7 +48,7 @@ class SteveController:
     '''
     X_POSITION = 80
     Y_POSITION = 310
-    Y_POSITION_DUCKING = 340
+    Y_POSITION_CROUCHING = 340
     JUMP_VELOCITY = 8.5
 
     def __init__(self, steve_run):
@@ -59,11 +59,11 @@ class SteveController:
         '''
         self.steve_run = steve_run
 
-        self.duck_image = SteveRun.DUCKING_IMAGE
+        self.crouch_image = SteveRun.CROUCHING_IMAGE
         self.run_image = SteveRun.RUNNING_IMAGE
         self.jump_image = SteveRun.JUMPING_IMAGE
 
-        self.steve_ducking = False
+        self.steve_crouching = False
         self.steve_running = True
         self.steve_jumping = False
 
@@ -80,8 +80,8 @@ class SteveController:
         Args:
             user_input: the input read in from the player's keyboard.
         '''
-        if self.steve_ducking:
-            self.duck()
+        if self.steve_crouching:
+            self.crouch()
         if self.steve_running:
             self.run()
         if self.steve_jumping:
@@ -91,27 +91,27 @@ class SteveController:
             self.step_index = 0
 
         if user_input[pygame.K_SPACE] and not self.steve_jumping:
-            self.steve_ducking = False
+            self.steve_crouching = False
             self.steve_running = False
             self.steve_jumping = True
         elif user_input[pygame.K_LSHIFT] and not self.steve_jumping:
-            self.steve_ducking = True
+            self.steve_crouching = True
             self.steve_running = False
             self.steve_jumping = False
         elif not (self.steve_jumping or user_input[pygame.K_LSHIFT]):
-            self.steve_ducking = False
+            self.steve_crouching = False
             self.steve_running = True
             self.steve_jumping = False
 
-    def duck(self):
+    def crouch(self):
         '''
-        Changes Steve's state to be 'ducking', and updates the model.
+        Changes Steve's state to be 'crouching', and updates the model.
         '''
-        self.image = self.duck_image[self.step_index // 5]
+        self.image = self.crouch_image[self.step_index // 5]
         self.steve_run.update_image(self.image)
         self.steve_rect = self.image.get_rect()
         self.steve_rect.x = self.X_POSITION
-        self.steve_rect.y = self.Y_POSITION_DUCKING
+        self.steve_rect.y = self.Y_POSITION_CROUCHING
         self.step_index += 1
 
     def run(self):
