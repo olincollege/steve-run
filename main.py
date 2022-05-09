@@ -71,14 +71,16 @@ def menu(caught_count, steve_run):
         SteveRun.SCREEN.fill((255, 255, 255))
         FONT = pygame.font.Font('freesansbold.ttf', 30)
 
+        text = FONT.render("Use Space/Shift or Up/Down to Navigate\n", True, (0, 0, 0))
         if caught_count == 0:
-            text = FONT.render("Press any Key to Start", True, (0, 0, 0))
+            text = text + FONT.render("Press any Key to Start", True, (0, 0, 0))
         elif caught_count > 0:
-            text = FONT.render("Press any Key to Restart", True, (0, 0, 0))
+            text = text + FONT.render("Press any Key to Restart", True, (0, 0, 0))
             score = FONT.render("Your Score: " + str(steve_run.points), True, (0, 0, 0))
             scoreRect = score.get_rect()
             scoreRect.center = (SteveRun.SCREEN_WIDTH // 2, SteveRun.SCREEN_HEIGHT // 2 + 50)
             SteveRun.SCREEN.blit(score, scoreRect)
+
         textRect = text.get_rect()
         textRect.center = (SteveRun.SCREEN_WIDTH // 2, SteveRun.SCREEN_HEIGHT // 2)
         SteveRun.SCREEN.blit(text, textRect)
