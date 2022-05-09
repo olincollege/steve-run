@@ -90,15 +90,18 @@ class SteveController:
         if self.step_index >= 10:
             self.step_index = 0
 
-        if user_input[pygame.K_SPACE] and not self.steve_jumping:
+        if (user_input[pygame.K_SPACE] or user_input[pygame.K_UP]) and \
+            not self.steve_jumping:
             self.steve_crouching = False
             self.steve_running = False
             self.steve_jumping = True
-        elif user_input[pygame.K_LSHIFT] and not self.steve_jumping:
+        elif (user_input[pygame.K_LSHIFT] or user_input[pygame.K_DOWN]) and \
+            not self.steve_jumping:
             self.steve_crouching = True
             self.steve_running = False
             self.steve_jumping = False
-        elif not (self.steve_jumping or user_input[pygame.K_LSHIFT]):
+        elif not (self.steve_jumping or user_input[pygame.K_LSHIFT] or \
+            user_input[pygame.K_UP]):
             self.steve_crouching = False
             self.steve_running = True
             self.steve_jumping = False
