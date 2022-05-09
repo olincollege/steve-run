@@ -7,6 +7,8 @@ Takes in keyboard inputs and moves Steve based upon it.
 import pygame
 from steve_run import SteveRun
 
+# pylint doesn't believe the controls work
+# pylint: disable=no-member
 
 class SteveController:
     '''
@@ -110,9 +112,9 @@ class SteveController:
         '''
         Changes Steve's state to be 'crouching', and updates the model.
         '''
-        self.image = self.crouch_image[self.step_index // 5]
-        self.steve_run.update_image(self.image)
-        self.steve_rect = self.image.get_rect()
+        image = self.crouch_image[self.step_index // 5]
+        self.steve_run.update_image(image)
+        self.steve_rect = image.get_rect()
         self.steve_rect.x = self.X_POSITION
         self.steve_rect.y = self.Y_POSITION_CROUCHING
         self.step_index += 1
@@ -121,9 +123,9 @@ class SteveController:
         '''
         Changes Steve's state to be 'running', and updates the model.
         '''
-        self.image = self.run_image[self.step_index // 5]
-        self.steve_run.update_image(self.image)
-        self.steve_rect = self.image.get_rect()
+        image = self.crouch_image[self.step_index // 5]
+        self.steve_run.update_image(image)
+        self.steve_rect = image.get_rect()
         self.steve_rect.x = self.X_POSITION
         self.steve_rect.y = self.Y_POSITION
         self.step_index += 1
@@ -132,8 +134,8 @@ class SteveController:
         '''
         Changes Steve's state to be 'jumping', and updates the model.
         '''
-        self.image = self.jump_image
-        self.steve_run.update_image(self.image)
+        image = self.jump_image
+        self.steve_run.update_image(image)
         if self.steve_jumping:
             self.steve_rect.y -= self.jump_velocity * 4
             self.jump_velocity -= 0.8
