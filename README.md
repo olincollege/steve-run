@@ -43,3 +43,5 @@ The controls for this game are very basic. The Up Arrow and Space Bar cause the 
 ## Website
 
 To go more in depth into this project, check out our website here: [https://anhthusebela.github.io/SteveRun.github.io/](https://anhthusebela.github.io/SteveRun.github.io/)
+
+A video giving an overview of the game design and process is linked on that website.

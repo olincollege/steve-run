@@ -120,7 +120,7 @@ class SteveRun:
         '''
         Edits and displays the score during a game.
         '''
-        self.increase_points()
+        self.increase_points(1)
         if self.points() % 100 == 0:
             self._game_speed += 1
         text = self.FONT.render("Points: " + str(self.points()), True,
@@ -148,11 +148,14 @@ class SteveRun:
         '''
         return self._points
 
-    def increase_points(self):
+    def increase_points(self, number_to_increase):
         '''
         Increases the total points by 1.
+
+        Args:
+        number_to_increase: an int representing how much to increase by.
         '''
-        self._points += 1
+        self._points += number_to_increase
 
     def game_speed(self):
         '''
