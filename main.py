@@ -49,7 +49,7 @@ def main():
             obstacle.draw(SteveRun.SCREEN)
             obstacle.update()
             if _steve_controller.steve_rect.colliderect(obstacle.rect):
-                steve_run.update_image(steve_run.CAUGHT_STEVE)
+                steve_run.update_image(steve_run.CAUGHT_IMAGE)
                 pygame.time.delay(1000)
                 steve_run.increase_caught_count()
                 menu(steve_run.caught_count(), steve_run)
